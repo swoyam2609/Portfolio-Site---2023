@@ -1,0 +1,99 @@
+\documentclass[a4paper,9pt]{extarticle}
+\usepackage[margin=1cm]{geometry}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage[hidelinks]{hyperref}
+\usepackage{titlesec}
+\usepackage{parskip}
+
+% Color for hyperlinks
+\hypersetup{
+    colorlinks=true,
+    urlcolor=blue,
+}
+
+% Styling
+\titleformat{\section}{\large\bfseries\color{black}}{}{0em}{}[\vspace{0pt}\titlerule\vspace{2pt}]
+\titlespacing*{\section}{0pt}{8pt}{2pt}
+\titleformat{\subsection}[runin]{\bfseries}{}{0em}{}[\ -- ]
+\renewcommand{\labelitemi}{--}
+
+% Tighter list spacing globally
+\setlist{leftmargin=*, noitemsep, topsep=0pt, parsep=0pt, partopsep=0pt}
+\pagestyle{empty}
+\linespread{0.88}
+
+%--------------------------------------------------
+\begin{document}
+
+\begin{center}
+    {\LARGE \textbf{Swoyam Siddharth Nayak}}\\[4pt]
+    \href{mailto:me@swoyam.in}{me@swoyam.in} $\vert$
+    \href{https://api.whatsapp.com/send?phone=917608086659}{+91-7608086659} $\vert$
+    \href{https://www.linkedin.com/in/swoyam2609/}{linkedin.com/in/swoyam2609} $\vert$
+    \href{https://github.com/swoyam2609}{github.com/swoyam2609}
+\end{center}
+
+\section*{Professional Experience}
+\textbf{Software Engineer, SarvamAI} \hfill June 2025 -- Present\\
+\href{https://www.sarvam.ai/}{sarvam.ai}
+\begin{itemize}[leftmargin=*, labelsep=3pt, itemsep=2pt, topsep=2pt, parsep=0pt]
+    \item \textbf{Re-architected the core conversational agent onto native function-calling}, replacing a two-agent (action + tool) pipeline with a unified tool-calling agent and pluggable streaming/unstreaming adapters across the voice-to-voice and WhatsApp/text pipelines -- removing a per-turn pipeline hop and cutting latency.
+    \item \textbf{Built the \href{https://www.sarvam.ai/products/conversational-agents}{Samvaad} ``Copilot'' (Improve-with-AI)} -- a \texttt{pydantic\_ai} orchestrator that streams edits over WebSocket and mutates live agent state-machine config through typed tools (edit-state, update-variable, edit-global-instruction) over Gemini 2.5 / Claude Sonnet 4, cutting agent authoring from \textasciitilde7 days to 1--2 hours.
+    \item \textbf{Owned Playground v2}, delivering conversation forking/branching (replay any interaction to a chosen turn and fork new state, with Redis state-machine hydration) plus history review, bookmarking, and ClickHouse/Redis-backed debug-interaction management.
+    \item \textbf{Designed sarvam-llm, a multi-provider LLM abstraction} over LiteLLM (AWS Bedrock, Google Vertex, Anthropic Claude, Azure/OpenAI) with automatic fallback chains, native function-calling, structured output, tuned httpx connection pooling, and Prometheus metrics (token usage, inter-token latency, time-to-first-speech).
+    \item \textbf{Engineered real-time barge-in / interruption handling}, truncating the assistant turn at the exact played-character boundary and reconciling the LLM thread for seamless resumption.
+    \item \textbf{Built a real-time background-noise system} that dynamically mixes ambient audio into the TTS stream, or streams it independently based on speaker state, for continuous acoustic realism.
+    \item \textbf{Shipped post-call structured data extraction} -- dynamically builds a Pydantic schema from each agent's variable config to drive typed LLM extraction from call transcripts.
+    \item \textbf{Deployed the Extension Service} -- a Streamlit multi-app platform with dynamic app routing, Flagsmith-driven org entitlement, and shared JWT auth within the NextJS environment, for client-specific tools.
+    \item \textbf{Delivered voice AI agents for multiple client organizations} (collections, sales, retention, scheme support) as a forward-deployed engineer, handling high-volume real-time interactions -- including a chunked, staggered, timezone-aware outbound-campaign scheduler and a DND bulk-cancellation tool (asyncpg pool + concurrent aiohttp) for Tata Capital.
+    \item \textbf{Designed the interaction-turns and interaction-event ClickHouse data model} (sarvam-app-analytics-db) -- per-turn and per-event tables capturing per-modality model, pipeline, and TTFB/TTFV latency across the ASR, LLM, tool, TTS and translate stages -- surfaced through Metabase dashboards driving business and platform decisions.
+\end{itemize}
+
+\section*{Education}
+\textbf{B.Tech in Computer Science Engineering}, IIIT Bhubaneswar \hfill 2021 -- 2025 \\
+Aggregate: 8.35 / 10
+
+\section*{Skills}
+\begin{itemize}[leftmargin=*, labelsep=3pt, itemsep=2pt, topsep=2pt, parsep=0pt]
+    \item \textbf{Languages:} Python, JavaScript, C/C++, SQL
+    \item \textbf{Frameworks \& Libraries:} FastAPI, Streamlit, NextJS, ReactJS, Hugging Face, Pydantic AI, LiteLLM, WebSockets, Locust
+    \item \textbf{Data \& Cloud:} PostgreSQL, MySQL, ClickHouse, Redis, Azure, GCP, AWS
+    \item \textbf{Tools \& DevOps:} Docker, Kubernetes/Helm, ArgoCD, Terraform, k9s, Git/GitHub, Github Workflows, MetaBase, Grafana, Prometheus, OpenTelemetry, Flagsmith
+\end{itemize}
+
+\section*{Key Projects}
+\textbf{Sentry Auto-Triage Bot} \\[3pt]
+\textit{Technologies: Python, FastAPI, LiteLLM, Vertex AI (Gemini), GitHub API, Slack}
+\begin{itemize}[leftmargin=*, labelsep=3pt, itemsep=2pt, topsep=2pt, parsep=0pt]
+    \item Built a FastAPI webhook that ingests Sentry issues, resolves the offending source frame, and fetches the surrounding code from GitHub for context.
+    \item Runs an SRE-style root-cause analysis via Vertex AI (Gemini) and posts a rich Slack Block Kit triage card, cutting time-to-diagnosis for production errors.
+\end{itemize}
+
+\textbf{AI-Assisted Storyboarding Platform} \hfill
+\href{https://github.com/swoyam2609/aibot-backend}{Github}\\[3pt]
+\textit{Technologies: Python, FastAPI, DALL-E 2, Gemini, Generative AI}
+\begin{itemize}[leftmargin=*, labelsep=3pt, itemsep=2pt, topsep=2pt, parsep=0pt]
+    \item Designed and engineered an AI-powered platform to facilitate the rapid creation of creative storyboards for filmmakers and directors, enhancing the pre-production ideation phase with visual support.
+    \item Leveraged the \textbf{Gemini 1.5 Flash} model as the core ChatLLM for generating and refining the final textual scenes and descriptive elements of the story.
+    \item Integrated \textbf{DALL-E 2 APIs} to programmatically generate accompanying visual assets (images) for each story segment, delivering a complete, production-ready storyboard.
+\end{itemize}
+
+\section*{Publications}
+\textbf{Precision Agriculture: ML and DL-based Detection and Classification of Agricultural Pests} \hfill
+\href{https://ieeexplore.ieee.org/abstract/document/10431427}{IEEE Xplore}
+\begin{itemize}[leftmargin=*, labelsep=3pt, itemsep=2pt, topsep=2pt, parsep=0pt]
+    \item Engineered a \textbf{novel hybrid ML/DL model} (EfficientNetB0 + XGBoost) for classifying \textbf{12 agricultural pest categories}.
+    \item Achieved \textbf{96.7\% accuracy} in early detection, outperforming individual baseline CNN and ML models.
+    \item Focused on precision agriculture to mitigate crop losses through robust feature extraction and classification.
+\end{itemize}
+
+\section*{Achievements}
+\textbf{Google Hash Code 2022 - Qualification Round} \hfill
+\href{https://www.linkedin.com/in/swoyam2609/overlay/1717313694757/single-media-viewer/?profileId=ACoAADTX3pABwhPYegclndc-1yAMXZUi1absYJw}{Certificate}
+\begin{itemize}[leftmargin=*, labelsep=3pt, itemsep=2pt, topsep=2pt, parsep=0pt]
+    \item Successfully completed the Qualification Round of the global team programming competition, \textbf{Google Hash Code 2022}.
+    \item Scored \textbf{807,907 points} by developing an optimized solution for a large-scale logistics problem, demonstrating proficiency in algorithmic problem-solving under time constraints.
+\end{itemize}
+
+\end{document}

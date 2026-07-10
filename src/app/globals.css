@@ -1,0 +1,138 @@
+@import "tailwindcss";
+
+/* ============================================================
+   Claude-inspired warm theme — reskins Tatva's semantic tokens.
+   Single source of truth: change values here, everything follows.
+   ============================================================ */
+:root {
+  --color-tatva-background-primary: #faf9f5;
+  --color-tatva-background-secondary: #f0eee6;
+  --color-tatva-background-tertiary: #eae7dc;
+  --color-tatva-surface-primary: #ffffff;
+  --color-tatva-surface-secondary: #f5f3ec;
+  --color-tatva-content-primary: #24231f;
+  --color-tatva-content-secondary: #56534b;
+  --color-tatva-content-tertiary: #8a887e;
+  --color-tatva-content-quaternary: #b2afa4;
+  --color-tatva-border-primary: #e4e0d5;
+  --color-tatva-border-secondary: #edeae0;
+  --color-tatva-brand-primary: #cc7452;
+  --color-tatva-brand-primary-hover: #b8613f;
+  --color-tatva-brand-content-primary: #ffffff;
+  --accent: #bd5b3d;
+  --accent-rgb: 189 91 61;
+  --badge-green: #1f7a45;
+}
+.dark {
+  --color-tatva-background-primary: #262624;
+  --color-tatva-background-secondary: #1f1e1c;
+  --color-tatva-background-tertiary: #35342f;
+  --color-tatva-surface-primary: #2f2e2a;
+  --color-tatva-surface-secondary: #35332e;
+  --color-tatva-content-primary: #f3f1ea;
+  --color-tatva-content-secondary: #c4c1b6;
+  --color-tatva-content-tertiary: #8f8d82;
+  --color-tatva-content-quaternary: #63625b;
+  --color-tatva-border-primary: #3b3934;
+  --color-tatva-border-secondary: #47443d;
+  --color-tatva-brand-primary: #d97757;
+  --color-tatva-brand-primary-hover: #e08a6b;
+  --color-tatva-brand-content-primary: #1f1e1c;
+  --accent: #e5977a;
+  --accent-rgb: 229 151 122;
+  --badge-green: #6bd39a;
+}
+
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  background: var(--color-tatva-background-primary);
+  color: var(--color-tatva-content-primary);
+}
+
+.mono { font-family: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace; }
+.display { font-family: Georgia, "Times New Roman", "Iowan Old Style", serif; }
+
+a { color: inherit; text-decoration: none; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 6px; }
+
+/* ---------------- Hero waveform + glow ---------------- */
+#wave {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  opacity: 0.5; z-index: 0; pointer-events: none;
+  -webkit-mask-image: linear-gradient(180deg, transparent, #000 30%, #000 70%, transparent);
+  mask-image: linear-gradient(180deg, transparent, #000 30%, #000 70%, transparent);
+}
+.hero-glow {
+  position: absolute; z-index: 0; pointer-events: none;
+  top: -10%; left: 50%; width: min(900px, 90vw); height: 520px;
+  transform: translateX(-50%);
+  background: radial-gradient(closest-side, rgba(var(--accent-rgb), 0.16), transparent 70%);
+  filter: blur(20px);
+  animation: glowPulse 9s ease-in-out infinite;
+}
+@keyframes glowPulse {
+  0%, 100% { opacity: 0.7; transform: translateX(-50%) scale(1); }
+  50% { opacity: 1; transform: translateX(-52%) scale(1.08); }
+}
+
+/* ---------------- Scroll reveal ---------------- */
+.reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.2, 0.7, 0.2, 1); }
+.reveal.in { opacity: 1; transform: none; }
+
+/* ---------------- Hero entrance (page load) ---------------- */
+@keyframes fadeUp { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+.enter > * { opacity: 0; animation: fadeUp 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) forwards; }
+.enter > *:nth-child(1) { animation-delay: 0.10s; }
+.enter > *:nth-child(2) { animation-delay: 0.20s; }
+.enter > *:nth-child(3) { animation-delay: 0.30s; }
+.enter > *:nth-child(4) { animation-delay: 0.40s; }
+.enter > *:nth-child(5) { animation-delay: 0.52s; }
+.enter > *:nth-child(6) { animation-delay: 0.64s; }
+
+/* ---------------- Timeline rail ---------------- */
+.rail { position: relative; }
+.rail::before {
+  content: ""; position: absolute; left: 0; top: 6px; bottom: 6px; width: 1px;
+  background: var(--color-tatva-border-primary);
+}
+
+/* ---------------- Nav link underline ---------------- */
+.navlink { position: relative; }
+.navlink::after {
+  content: ""; position: absolute; left: 0; bottom: -4px; height: 1.5px; width: 100%;
+  background: var(--accent); transform: scaleX(0); transform-origin: left;
+  transition: transform 0.28s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.navlink:hover::after { transform: scaleX(1); }
+
+/* ---------------- Card hover lift ---------------- */
+.lift { transition: transform 0.28s cubic-bezier(0.2, 0.7, 0.2, 1), box-shadow 0.28s ease; will-change: transform; }
+.lift:hover { transform: translateY(-4px); box-shadow: 0 14px 40px -18px rgba(var(--accent-rgb), 0.35); }
+
+/* ---------------- Theme toggle (animated sun/moon) ---------------- */
+.theme-toggle {
+  display: grid; place-items: center; width: 36px; height: 36px; border-radius: 10px;
+  border: 1px solid var(--color-tatva-border-primary); background: var(--color-tatva-surface-primary);
+  color: var(--accent); cursor: pointer; transition: border-color 0.2s, transform 0.2s;
+}
+.theme-toggle:hover { border-color: var(--accent); transform: translateY(-1px); }
+.theme-toggle svg { transition: transform 0.5s cubic-bezier(0.3, 0.7, 0.2, 1); }
+.theme-toggle.is-dark svg { transform: rotate(-25deg); }
+.theme-toggle .rays line { transform-origin: center; transition: opacity 0.3s ease, transform 0.35s ease; }
+.theme-toggle.is-dark .rays { opacity: 0; }
+.theme-toggle.is-dark .rays line { transform: scale(0.4); }
+.theme-toggle .moon-cut { transform: translateX(13px); transition: transform 0.45s cubic-bezier(0.3, 0.7, 0.2, 1); }
+.theme-toggle.is-dark .moon-cut { transform: translateX(4px); }
+.theme-toggle .orb { transition: r 0.35s ease; }
+
+/* ---------------- Reduced motion ---------------- */
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; transition: none; }
+  .enter > * { opacity: 1; animation: none; }
+  .hero-glow { animation: none; }
+  .lift { transition: none; }
+  .theme-toggle svg, .theme-toggle .rays line, .theme-toggle .moon-cut { transition: none; }
+}
